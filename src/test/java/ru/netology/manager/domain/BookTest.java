@@ -5,32 +5,37 @@ import ru.netology.manager.domain.Book;
 import ru.netology.manager.domain.Product;
 import ru.netology.manager.domain.Smartphone;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class BookTest {
 
     @Test
-    public void shouldHaveAllFieldsAndMethodFromSuperClass() {
-        Book book = new Book();
+    void shouldMatchByAuthor() {
+        Book book = new Book(1, "The Diary Of A Young Girl", 150, " Anne Frank");
+        boolean actual = book.matches(" Anne Frank");
+        assertTrue(actual);
+
     }
 
     @Test
-    public void shouldCastFromBaseClass() {
-        Product product = new Book();
-        if (product instanceof Book) {
-            Book book = (Book) product;
-        }
-    }
-
-
-    @Test
-    public void shouldNotCastToDifferentClass() {
-        Product product = new Smartphone();
-        Smartphone smartphone = (Smartphone) product;
+    void shouldNotMatchByAuthor() {
+        Book book = new Book(1, "The Diary Of A Young Girl", 150, " Anne Frank");
+        boolean actual = book.matches("Tolstoy");
+        assertFalse(actual);
     }
 
     @Test
-    public void shouldUseOverridedMethod() {
-        Product product = new Book();
+    void shouldMatchByName() {
+        Book book =  new Book(1, "The Diary Of A Young Girl", 150, " Anne Frank");
+        boolean actual = book.matches("The Diary Of A Young Girl");
+        assertTrue(actual);
+    }
 
-        product.toString();
+    @Test
+    void shouldNotMatchByName() {
+        Book book = new Book(1, "The Diary Of A Young Girl", 150, " Anne Frank");
+        boolean actual = book.matches("Harry Potter");
+        assertFalse(actual);
     }
 }
